@@ -1,6 +1,8 @@
 class Game < ApplicationRecord
   attr_accessor :matrix, :columns, :rows
 
+  # The game's model specifies the default values of rows and columns
+
   def initialize(values)
     @columns = values[:columns]
     @rows = values[:rows]
@@ -8,51 +10,62 @@ class Game < ApplicationRecord
     super
   end
 
-  def load(cells)
-    cells.each { |y, x| matrix[y][x] = 1 }
+  def active_neighbours_around_cell(cell)
+    active_neighbours = []
+    check_eight_neighbours
+    active_neighbours
   end
-
-  def neighbors_count(y, x)
-    neighbors(y, x).count { |cell| cell == 1 }
-  end
-
-  def execute
-    new_matrix = load_matrix
-    matrix.each_with_index do |row, y|
-      row.each_with_index do |cell, x|
-        count = neighbors_count(y, x)
-        new_matrix[y][x] = begin
-          if cell.zero?
-            [3].include?(count) ? 1 : 0
-          else
-            [2, 3].include?(count) ? 1 : 0
-          end
-        end
-      end
-    end
-
-    @matrix = new_matrix
-  end
-
 
   private
 
-  def neighbors(y, x)
-    (-1..1).inject [] do |values, py|
-      (-1..1).each do |px|
-        unless py == 0 and px == 0
-          i = y + py
-          j = x + px
-          i = 0 unless i < rows
-          j = 0 unless j < columns
-          values << matrix[i][j]
-        end
-      end
-      values
+  def check_eight_neighbours
+    # top cell
+    if cell.y > 0
+      candidate = self.matrix[cell.y - 1][cell.x]
+      active_neighbours << candidate if candidate.active?
+    end
+    # top-right cell
+    if cell.y > 0 && cell.x < (columns -1)
+      candidate = self.matrix[cell.y - 1][cell.x + 1]
+      active_neighbours << candidate if candidate.active?
+    end
+    # right cell
+    if cell.x > (columns - 1)
+      candidate = self.matrix[cell.y][cell.x + 1]
+      active_neighbours << candidate if candidate.active?
+    end
+    # bottom-right cell
+    if cell.y < (rows - 1) && cell.x < (cols - 1)
+      candidate = self.matrix[cell.y + 1][cell.x + 1]
+      active_neighbours << candidate if candidate.active?
+    end
+    # bottom cell
+    if cell.y < (rows - 1)
+      candidate = self.matrix[cell.y + 1][cell.x]
+      active_neighbours << candidate if candidate.active?
+    end
+    # bottom-left cell
+    if cell.y < (rows - 1) && cell.x > 0
+      candidate = self.matrix[cell.y + 1][cell.x - 1]
+      active_neighbours << candidate if candidate.active?
+    end
+    # left cell
+    if cell.x > 0
+      candidate = self.matrix[cell.y][cell.x - 1]
+      active_neighbours << candidate if candidate.active?
+    end
+    # top-left cell
+    if cell.y > 0 && cell.x > 0
+      candidate = self.matrix[cell.y - 1][cell.x - 1]
+      active_neighbours << candidate if candidate.active?
     end
   end
 
   def load_matrix
-    Array.new(rows) { Array.new(columns, 0) }
+    Array.new(rows) do |row|
+      Array.new(columns) do |column|
+        Cell.new(column, row)
+      end
+    end
   end
 end
