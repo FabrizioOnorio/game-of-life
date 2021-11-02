@@ -34,7 +34,11 @@ class GamesController < ApplicationController
     tick
     @game.save
     new_generation = @game
-    new_generation.generation = old_game_save.generation += 1 unless old_game_save.matrix == new_generation.matrix
+    if old_game_save.matrix != new_generation.matrix
+      new_generation.generation = old_game_save.generation += 1
+    else
+      flash.alert = "> The game is over <"
+    end
     @game.save
     redirect_to game_path(@game.id)
   end
