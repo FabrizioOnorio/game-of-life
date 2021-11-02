@@ -1,3 +1,36 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+ * {
+   font-family: 'Roboto', sans-serif;
+   background-color: #a8dadc;
+ }
+
+ .main-container {
+   text-align: center;
+   color: #1d3557;
+ }
+
+ a {
+   color: #457b9d;
+ }
+
+ a:hover {
+  color: #e63946;
+ }
+
+.rules {
+  text-align: left;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.matrix {
+  background-color: #f1faee;
+  border-radius: 8px;
+  justify-content: space-around;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 16px;
+}
+

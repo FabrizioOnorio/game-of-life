@@ -1,11 +1,13 @@
-<div>
+<div class="main-container">
 
-  <h1>Welcome to the Game of Life</h1>
+  <h1>Welcome!</h1>
+
 
   <% if user_signed_in? %>
-    <%= link_to "Play!", new_game_url %><br>
+    <%= link_to "Play!", new_game_url %><br><br>
     <%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %>
   <% else %>
-    <%= link_to "Sign in or Sign up to be able to play", new_user_session_path %>
+    <p>You need an account in order to play this game:</p><br>
+    <%= link_to "Sign in / Sign up", new_user_session_path %>
   <% end %>
 </div>

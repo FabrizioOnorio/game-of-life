@@ -1,10 +1,15 @@
-<h1>hi </h1>
-<%= @game.generation %><br>
-<% @game.matrix.each do |row|  %>
-  <% row.each do |cell| %>
-    <%= cell ? "x" : "o" %>
-  <% end %>
+<div class="main-container">
+  <h1>Conway's Game of Life</h1>
+  <p>Generation <%= @game.generation %>:</p><br>
+  <div class="matrix">
+    <% @game.matrix.each do |row|  %>
+      <% row.each do |cell| %>
+        <%= cell ? "🟢" : "🔵" %>
+      <% end %>
+      <br>
+    <% end %>
+  </div>
   <br>
-<% end %>
-
-<%= link_to 'next', game_path(@game), method: :put %>
+  <%= link_to 'Next', game_path(@game), method: :put %><br><br>
+  <%= link_to 'Start again', new_game_url %>
+</div>
