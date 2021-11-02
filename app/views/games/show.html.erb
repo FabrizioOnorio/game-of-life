@@ -1,0 +1,10 @@
+<h1>hi </h1>
+<%= @game.generation %><br>
+<% @game.matrix.each do |row|  %>
+  <% row.each do |cell| %>
+    <%= cell ? "x" : "o" %>
+  <% end %>
+  <br>
+<% end %>
+
+<%= link_to 'next', game_path(@game), method: :put %>
