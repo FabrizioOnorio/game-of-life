@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-
+  # this method checks the cells around each cell of the matrix
   def active_neighbours_around_cell(x, y)
     @rows = self.matrix.size
     @columns = self.matrix[0].size

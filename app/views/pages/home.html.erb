@@ -1,8 +1,8 @@
 <div class="main-container">
 
   <h1>Welcome!</h1>
-
-
+  <p>This is a Conway's Game of Life</p>
+  <p><%= link_to 'click here', 'https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life', target: :_blank %> if you want to read more about it </p>
   <% if user_signed_in? %>
     <%= link_to "Play!", new_game_url %><br><br>
     <%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %>
