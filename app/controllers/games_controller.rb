@@ -37,7 +37,7 @@ class GamesController < ApplicationController
     if old_game_save.matrix != new_generation.matrix
       new_generation.generation = old_game_save.generation += 1
     else
-      flash.alert = "> The game is over <"
+      flash.alert = ">The game is over <"
     end
     @game.save
     redirect_to game_path(@game.id)
